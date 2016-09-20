@@ -13,41 +13,30 @@
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
-function drawVisualization() {
-  // Create and populate the data table.
-  var data = new google.visualization.DataTable();
-  var raw_data = [['Invisible', 10, 20, 30, 40],
-                  ['Visible', 80, 60, 40, 20]];
+      function drawChart() {
 
-  var years = ["Step1", "Step2", "Step3", "Step4"];
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 3],
+          ['Onions', 1],
+          ['Olives', 1],
+          ['Zucchini', 1],
+          ['Pepperoni', 2]
+        ]);
 
-  data.addColumn('string', 'Year');
-  for (var i = 0; i  < raw_data.length; ++i) {
-    data.addColumn('number', raw_data[i][0]);    
-  }
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300};
 
-  data.addRows(years.length);
-
-  for (var j = 0; j < years.length; ++j) {    
-    data.setValue(j, 0, years[j].toString());    
-  }
-  for (var i = 0; i  < raw_data.length; ++i) {
-    for (var j = 1; j  < raw_data[i].length; ++j) {
-      data.setValue(j-1, i+1, raw_data[i][j]);    
-    }
-  }
-
-  // Create and draw the visualization.
-  new google.visualization.BarChart(document.getElementById('visualization')).
-      draw(data,
-           {title:"Yearly Coffee Consumption by Country",
-            width:600, height:400,
-            colors: ['ffffff','aaaaaa'], 
-            vAxis: {title: "Year"},
-            hAxis: {title: "Cups", gridlineColor : 'ffffff'}, isStacked: true}
-      );
-}
- </script>
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
   </head>
 
   <body>
